@@ -5,21 +5,21 @@ import (
 	"github.com/ilmu-merah/be-article/internal/auth"
 )
 
-func NewRouter() *http.ServeMux {
+func NewRouter(authHandler *auth.AuthHandler) *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.Handle("/api/", http.StripPrefix("/api", publicRouter()))
+	mux.Handle("/api/", http.StripPrefix("/api", publicRouter(authHandler)))
 	mux.Handle("/admin/", http.StripPrefix("/admin", onlyAdminRouter()))
 
 	return mux;
 }
 
-func publicRouter() *http.ServeMux {
+func publicRouter(authHandler *auth.AuthHandler) *http.ServeMux {
 	mux := http.NewServeMux()
 
 	// auth routes
-	mux.HandleFunc("GET /auth/login", auth.Login)
-	mux.HandleFunc("POST /auth/register", auth.Register)
+	mux.HandleFunc("GET /auth/login", authHandler.Login)
+	mux.HandleFunc("POST /auth/register", authHandler.Register)
 
 	return mux
 }

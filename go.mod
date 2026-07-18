@@ -3,6 +3,7 @@ module github.com/ilmu-merah/be-article
 go 1.26.4
 
 require (
+	golang.org/x/crypto v0.54.0
 	gorm.io/driver/postgres v1.6.0
 	gorm.io/gorm v1.31.2
 )

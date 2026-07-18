@@ -1,5 +1,5 @@
 {
-    "openapi": "3.1.1",
+    "openapi": "3.0.1",
     "info": {
         "title": "BACKEND ARTICLE API",
         "version": "1.0.0",
@@ -30,5 +30,94 @@
             }
         }
     ],
-    "paths": {}
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "summary": "Registrasi User Baru",
+                "description": "Endpoint untuk mendaftarkan user baru ke sistem.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "Email",
+                                    "Password"
+                                ],
+                                "properties": {
+                                    "Fullname": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "Username": {
+                                        "type": "string",
+                                        "example": "johndoe"
+                                    },
+                                    "Email": {
+                                        "type": "string",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "Password": {
+                                        "type": "string",
+                                        "example": "rahasia123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registrasi Berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registrasi berhasil"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Input tidak valid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Email dan password wajib diisi"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "gagal menyimpan data user"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
