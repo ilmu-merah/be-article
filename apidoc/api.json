@@ -31,10 +31,30 @@
                 }
             }
         }
+    ], 
+    "tags": [
+        {
+            "name": "Autentikasi",
+            "description": "Rute untuk login, register, dan akses token"
+        },
+        {
+            "name": "Only Admin",
+            "description": "Rute yang hanya bisa di akses oleh admin"
+        }
     ],
+    "components": {                                                                                                                                                                        
+        "securitySchemes": {                                                                                                                                                                 
+          "BearerAuth": {                                                                                                                                                                    
+            "type": "http",                                                                                                                                                                  
+            "scheme": "bearer",                                                                                                                                                              
+            "bearerFormat": "JWT"
+          }                                                                                                                                                                                  
+        }                                                                                                                                                                                    
+    },         
     "paths": {
         "/auth/register": {
             "post": {
+                "tags": ["Autentikasi"],
                 "summary": "Registrasi User Baru",
                 "description": "Endpoint untuk mendaftarkan user baru ke sistem.",
                 "requestBody": {
@@ -124,6 +144,7 @@
 
         "/auth/login": {
             "post": {
+                "tags": ["Autentikasi"],
                 "summary": "Melakukan Login",
                 "requestBody": {
                     "required": true,
@@ -201,6 +222,62 @@
                                         "error": {
                                             "type": "string",
                                             "example": "terjadi kesalahan di server"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/accesstoken": {
+            "description": "Mendapatkan access token",
+            "get": {
+                "tags": ["Autentikasi"],
+                "responses": {
+                    "200": {
+                        "description": "Untuk mendapatkan akses token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "asdkaskdnkasndkjansdkjnaskjdnandnadakj" 
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Gagal mendapatkan access token (Unauthorize)",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Harap login terlebih dahulu"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Terjadi kesalahan di server",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Terjadi kesalahan di server"
                                         }
                                     }
                                 }
